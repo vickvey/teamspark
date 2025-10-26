@@ -2,27 +2,41 @@
 
 /** 🧹 Clean input text */
 function cleanText(text: string) {
-  return text.replace(/[\n\r]+/g, " ").trim();
+  console.log("[cleanText] Original:", text);
+  const cleaned = text.replace(/[\n\r]+/g, " ").trim();
+  console.log("[cleanText] Cleaned:", cleaned);
+  return cleaned;
 }
 
 /** 🧠 Clean and normalize API data */
 function cleanData(data: Record<string, number>): Record<string, number> {
+  console.log("[cleanData] Original data:", data);
   const cleaned: Record<string, number> = {};
   for (const [key, value] of Object.entries(data)) {
     if (typeof value === "number" && value > 0) {
       cleaned[key.trim().toLowerCase()] = Math.min(Math.max(value, 0), 1);
     }
   }
+  console.log("[cleanData] Cleaned data:", cleaned);
   return cleaned;
 }
 
 /** 🔮 Query Hugging Face emotion model directly */
 async function queryHuggingFace(text: string) {
+  const key = process.env.HUGGING_FACE_API_KEY;
+  console.log("[queryHuggingFace] Using API key present?", !!key);
+
+  if (!key) {
+    throw new Error(
+      "[queryHuggingFace] ERROR: Hugging Face API key is missing!"
+    );
+  }
+
   const response = await fetch(
     "https://router.huggingface.co/hf-inference/models/j-hartmann/emotion-english-distilroberta-base",
     {
       headers: {
-        Authorization: `Bearer ${process.env.HUGGING_FACE_API_KEY}`, // keep secret
+        Authorization: `Bearer ${key}`, // keep secret
         "Content-Type": "application/json",
       },
       method: "POST",
@@ -30,16 +44,19 @@ async function queryHuggingFace(text: string) {
     }
   );
 
+  console.log("[queryHuggingFace] Response status:", response.status);
+
   if (!response.ok) {
-    console.error(
-      "Hugging Face API error:",
-      response.status,
-      response.statusText
+    const text = await response.text();
+    console.error("[queryHuggingFace] Response body:", text);
+    throw new Error(
+      `Failed to fetch emotions: ${response.status} ${response.statusText}`
     );
-    throw new Error(`Failed to fetch emotions: ${response.statusText}`);
   }
 
-  return response.json();
+  const data = await response.json();
+  console.log("[queryHuggingFace] Response data:", data);
+  return data;
 }
 
 /** 🎭 Fetch emotions from Hugging Face and filter top results (up to 0.7 cumulative probability) */
@@ -47,12 +64,16 @@ export const fetchEmotionsBasedOnText = async (
   text: string
 ): Promise<string[]> => {
   try {
+    console.log("[fetchEmotionsBasedOnText] Input text:", text);
+
     const result = await queryHuggingFace(text);
 
     // Hugging Face output format:
     // [[{ label: "joy", score: 0.72 }, { label: "sadness", score: 0.15 }, ...]]
     const predictions =
       Array.isArray(result) && Array.isArray(result[0]) ? result[0] : result;
+
+    console.log("[fetchEmotionsBasedOnText] Predictions:", predictions);
 
     const data: Record<string, number> = {};
     for (const item of predictions) {
@@ -64,7 +85,6 @@ export const fetchEmotionsBasedOnText = async (
     const cleaned = cleanData(data);
     const sorted = Object.entries(cleaned).sort((a, b) => b[1] - a[1]);
 
-    // pick top emotions up to cumulative probability 0.7
     const emotions: string[] = [];
     let cumulative = 0;
     for (const [emotion, prob] of sorted) {
@@ -73,9 +93,10 @@ export const fetchEmotionsBasedOnText = async (
       cumulative += prob;
     }
 
+    console.log("[fetchEmotionsBasedOnText] Selected emotions:", emotions);
     return emotions;
   } catch (err) {
-    console.error("Error fetching emotions:", err);
+    console.error("[fetchEmotionsBasedOnText] Error fetching emotions:", err);
     return [];
   }
 };
