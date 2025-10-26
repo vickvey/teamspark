@@ -4,7 +4,7 @@ import MoodQuotes from "@/components/dashboard/child/mood-quotes";
 import MoodJournal from "@/components/dashboard/child/mood-journal";
 import MoodActivity from "@/components/dashboard/child/mood-activity";
 
-// 🎖️ Card 2 — Rewards
+// 🎖️ Rewards Card
 const RewardsCard: React.FC = () => (
   <div className="bg-white rounded-lg shadow-md p-6">
     <h3 className="text-lg font-semibold mb-2">🎖️ Your Rewards</h3>
@@ -17,7 +17,7 @@ const RewardsCard: React.FC = () => (
   </div>
 );
 
-// 🎮 Card 3 — Active Game
+// 🎮 Active Game Card
 const ActiveGameCard: React.FC = () => (
   <div className="bg-white rounded-lg shadow-md p-6">
     <h3 className="text-lg font-semibold mb-2">🎮 Continue Your Game</h3>
@@ -28,7 +28,7 @@ const ActiveGameCard: React.FC = () => (
   </div>
 );
 
-// 💡 Card 5 — Fun Tip
+// 💡 Fun Tip Card
 const FunTipCard: React.FC = () => (
   <div className="bg-white rounded-lg shadow-md p-6">
     <h3 className="text-lg font-semibold mb-2">💡 Health Tip</h3>
@@ -38,18 +38,55 @@ const FunTipCard: React.FC = () => (
   </div>
 );
 
-// 🧠 Dashboard Layout
-const ChildDashboard = () => {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-      {/* <TodayChallenge /> */}
+// Section wrapper component
+const SectionWrapper: React.FC<{
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+}> = ({ title, subtitle, children }) => (
+  <section className="mb-8 p-6 bg-white/80 border border-slate-300 rounded-2xl shadow-lg backdrop-blur-sm">
+    <header className="mb-4">
+      <h2 className="text-2xl font-bold text-green-700">{title}</h2>
+      {subtitle && <p className="text-gray-600 mt-1">{subtitle}</p>}
+    </header>
+    {children}
+  </section>
+);
+
+// Daily Section
+const DailySection: React.FC = () => (
+  <SectionWrapper
+    title="🏆 Daily Highlights"
+    subtitle="Check out your daily tasks, rewards, games, and quick tips!"
+  >
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 items-start">
       <HabitTracker userId="demo-user-123" />
-      <MoodJournal />
-      <MoodQuotes />
-      <MoodActivity />
       <RewardsCard />
       <ActiveGameCard />
       <FunTipCard />
+    </div>
+  </SectionWrapper>
+);
+
+// AI Section
+const AISection: React.FC = () => (
+  <SectionWrapper
+    title="🤖 Mood & AI Insights"
+    subtitle="Share your feelings, and we'll recommend activities and quotes for your mood!"
+  >
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 items-start">
+      <MoodJournal />
+      <MoodActivity />
+      <MoodQuotes />
+    </div>
+  </SectionWrapper>
+);
+
+const ChildDashboard = () => {
+  return (
+    <div className="flex flex-col">
+      <DailySection />
+      <AISection />
     </div>
   );
 };

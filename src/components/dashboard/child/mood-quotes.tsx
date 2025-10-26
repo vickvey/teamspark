@@ -69,7 +69,7 @@ const MoodQuotes: React.FC = () => {
   }, [emotions, quotesData]);
 
   return (
-    <Card className="max-w-xl mx-auto p-6 border border-slate-200 shadow-xl rounded-3xl bg-white/90 backdrop-blur-md">
+    <Card className="w-full p-6 border border-slate-200 shadow-xl rounded-3xl bg-white/90 backdrop-blur-md">
       <CardHeader className="text-center space-y-2">
         <CardTitle className="text-2xl font-bold">
           {emotions.length === 0

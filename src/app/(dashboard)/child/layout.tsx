@@ -26,9 +26,9 @@ export default function ChildDashboardLayout({
 
       {/* Main Content */}
       {/* Add a left margin on md+ equal to the sidebar width (w-64) so the fixed sidebar doesn't overlap content */}
-      <main className="flex-1 p-4 md:p-8 md:ml-64 transition-all">
+      <main className="flex-1 min-h-0 p-4 md:p-8 lg:ml-64 transition-all">
         {/* Header */}
-        <Header toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+        <Header />
         {/* Dashboard Grid / Children */}
         {children}
       </main>

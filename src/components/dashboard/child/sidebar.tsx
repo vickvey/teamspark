@@ -10,9 +10,16 @@ interface SidebarProps {
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   return (
     <>
+      {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-20 h-full w-64 bg-green-600 text-white flex flex-col p-6 transition-transform duration-300
-        md:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`
+          fixed top-0 left-0 z-20 h-full w-64 bg-green-600 text-white flex flex-col p-6 
+          transition-transform duration-300
+          transform 
+          -translate-x-full 
+          lg:translate-x-0
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
       >
         <h1 className="text-2xl font-bold mb-6 text-center">
           HealthEd Kids 🌱
@@ -43,9 +50,9 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         </button>
       </aside>
 
-      {/* Mobile toggle button */}
+      {/* Mobile & Tablet toggle button */}
       <button
-        className="fixed top-4 left-4 z-30 md:hidden bg-green-600 text-white p-2 rounded-md shadow-md"
+        className="fixed top-4 left-4 z-30 bg-green-600 text-white p-2 rounded-md shadow-md lg:hidden"
         onClick={() => setIsOpen(!isOpen)}
       >
         <FaBars />

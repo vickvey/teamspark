@@ -53,7 +53,7 @@ export const HabitTracker: React.FC<{ userId: string }> = ({ userId }) => {
   const progress = total > 0 ? (completed / total) * 100 : 0;
 
   return (
-    <Card className="max-w-2xl mx-auto p-6">
+    <Card className="w-full p-6">
       <CardHeader className="text-center">
         <CardTitle className="text-3xl font-bold bg-linear-to-r from-cyan-500 to-purple-600 bg-clip-text text-transparent">
           Daily Habits

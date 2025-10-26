@@ -47,7 +47,7 @@ const MoodJournal: React.FC = () => {
   }, [story, setSentiment, setEmotions]);
 
   return (
-    <Card className="flex flex-col justify-between max-w-xl w-full h-full p-6 border border-slate-200 shadow-xl rounded-3xl bg-white/90 backdrop-blur-md transition-all duration-300 hover:shadow-2xl">
+    <Card className="flex flex-col justify-between w-full h-full p-6 border border-slate-200 shadow-xl rounded-3xl bg-white/90 backdrop-blur-md transition-all duration-300 hover:shadow-2xl">
       <CardHeader className="text-center space-y-2">
         <CardTitle className="text-2xl sm:text-3xl font-extrabold bg-clip-text text-transparent bg-linear-to-r from-violet-600 via-blue-500 to-yellow-500">
           How are you feeling today?
