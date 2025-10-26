@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { FaCoins } from "react-icons/fa";
 import { useSessionStore } from "@/lib/store/useSessionStore";
 
@@ -13,7 +12,7 @@ export default function Header() {
     : "Welcome back! 🌞";
 
   return (
-    <div className="mb-6">
+    <div className="sticky top-0 z-50 mb-6">
       <div className="flex items-start justify-between gap-4 bg-white/90 border border-slate-200 rounded-3xl p-4 shadow-sm">
         <div>
           <h2 className="text-2xl font-bold text-green-700">{moodGreeting}</h2>
