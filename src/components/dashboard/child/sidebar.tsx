@@ -2,6 +2,8 @@
 
 import { FaBars } from "react-icons/fa";
 import { useState } from "react";
+import { useSessionStore } from "@/lib/store/useSessionStore";
+import Avatar from "./avatar";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -25,11 +27,11 @@ const SECTIONS: SectionItem[] = [
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const [activeSection, setActiveSection] = useState<string>("home");
 
+  const coins = useSessionStore((state) => state.coins);
+
   const handleSectionClick = (id: string) => {
     setActiveSection(id);
-    // optional: close sidebar on mobile/tablet
     if (window.innerWidth < 1024) setIsOpen(false);
-    // scroll to the section if needed
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
@@ -47,7 +49,15 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
-        <h1 className="text-2xl font-bold mb-6 text-center">
+        {/* Avatar (hidden on small screens) */}
+        <div className="hidden lg:flex flex-col items-center mb-6">
+          <Avatar gender="female" />
+          <div className="mt-2 text-yellow-300 font-semibold">
+            {coins} coins
+          </div>
+        </div>
+
+        <h1 className="text-2xl font-bold mb-6 text-center lg:hidden">
           HealthEd Kids 🌱
         </h1>
 

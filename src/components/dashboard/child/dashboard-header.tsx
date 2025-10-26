@@ -3,6 +3,7 @@
 import { FaCoins } from "react-icons/fa";
 import { useSessionStore } from "@/lib/store/useSessionStore";
 import { Button } from "@/components/ui/button"; // ShadCN button
+import Avatar from "./avatar";
 
 export default function Header() {
   const emotions = useSessionStore((state) => state.emotions);
@@ -51,10 +52,11 @@ export default function Header() {
 
           {/* Profile Photo + Name */}
           <div className="flex flex-col items-center">
-            <div className="w-12 h-12 rounded-full bg-gray-200 border-2 border-gray-300 flex items-center justify-center text-gray-400 text-sm font-semibold">
-              {/* Replace with <img /> for real photo */}
-              Photo
+            {/* Replace static photo with Avatar */}
+            <div className="w-16 h-16">
+              <Avatar gender="female" /> {/* or male depending on selection */}
             </div>
+
             <span className="mt-1 text-gray-700 font-medium text-sm">
               Ava Hanson
             </span>
