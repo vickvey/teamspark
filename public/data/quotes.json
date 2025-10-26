@@ -1,0 +1,92 @@
+[
+  {
+    "mood": "joy",
+    "quotes": [
+      "Joy is the simplest form of gratitude.",
+      "The most certain sign of wisdom is cheerfulness.",
+      "Find joy in the ordinary.",
+      "Happiness is not something ready-made. It comes from your own actions.",
+      "The grand essentials to happiness in this life are something to do, something to love, and something to hope for.",
+      "Joy is a net of love by which you can catch souls.",
+      "Thousands of candles can be lighted from a single candle, and the life of the candle will not be shortened. Happiness never decreases by being shared.",
+      "Let your joy burst forth like flowers in the spring.",
+      "Success is not the key to happiness. Happiness is the key to success.",
+      "Joy is not in things; it is in us."
+    ]
+  },
+  {
+    "mood": "sadness",
+    "quotes": [
+      "Tears come from the heart and not from the brain.",
+      "Sadness is but a wall between two gardens.",
+      "The word 'happiness' would lose its meaning if it were not balanced by sadness.",
+      "Heavy hearts, like heavy clouds in the sky, are best relieved by the letting of a little water.",
+      "There is no greater sorrow than to recall in misery the time when we were happy.",
+      "Sadness flies away on the wings of time.",
+      "Things change. And friends leave. Life doesn't stop for anybody.",
+      "What brings us to tears, will lead us to grace. Our pain is never wasted.",
+      "Don't cry because it's over, smile because it happened.",
+      "It's sad when someone you know becomes someone you knew."
+    ]
+  },
+  {
+    "mood": "anger",
+    "quotes": [
+      "Anger is an acid that can do more harm to the vessel in which it is stored than to anything on which it is poured.",
+      "For every minute you remain angry, you give up sixty seconds of peace of mind.",
+      "Holding on to anger is like grasping a hot coal with the intent of throwing it at someone else; you are the one who gets burned.",
+      "Anger is a feeling that makes your mouth work faster than your mind.",
+      "Speak when you are angry and you will make the best speech you will ever regret.",
+      "The greatest remedy for anger is delay.",
+      "Anger, if not restrained, is frequently more hurtful to us than the injury that provokes it.",
+      "Bitterness is like cancer. It eats upon the host. But anger is like fire. It burns it all clean.",
+      "Anybody can become angry — that is easy, but to be angry with the right person and to the right degree and at the right time... that is not easy.",
+      "Do not let the sun go down on your anger."
+    ]
+  },
+  {
+    "mood": "fear",
+    "quotes": [
+      "The only thing we have to fear is fear itself.",
+      "I learned that courage was not the absence of fear, but the triumph over it.",
+      "Fear is the path to the dark side. Fear leads to anger. Anger leads to hate. Hate leads to suffering.",
+      "He who is not everyday conquering some fear has not learned the secret of life.",
+      "Fear is a darkroom where negatives develop.",
+      "Courage is knowing what not to fear.",
+      "Do the thing you fear, and the death of fear is certain.",
+      "Fears are nothing more than a state of mind.",
+      "Of all the liars in the world, sometimes the worst are our own fears.",
+      "Fear is the main source of superstition, and one of the main sources of cruelty."
+    ]
+  },
+  {
+    "mood": "surprise",
+    "quotes": [
+      "Surprise is the greatest gift which life can grant us.",
+      "Life is full of surprises. Just say 'never' and you'll see.",
+      "The beauty of life is in its surprises.",
+      "A surprise is like a sudden uninvited Guest. It can be delightful or dreadful.",
+      "The whole of life is just like watching a film. Only it's as though you always get in ten minutes after the feature has started.",
+      "The universe is full of magical things patiently waiting for our wits to grow sharper.",
+      "A life without surprises is not a life worth living.",
+      "The element of surprise is a key component of human nature.",
+      "Nothing is more surprising than the easiness with which the many are governed by the few.",
+      "The heart is resilient and leaps at the chance of experiencing the unexpected."
+    ]
+  },
+  {
+    "mood": "neutral",
+    "quotes": [
+      "It is what it is.",
+      "Be still and know.",
+      "The mind is like water. When it's turbulent, it's difficult to see. When it's calm, everything becomes clear.",
+      "Just breathe.",
+      "Observe without judgement.",
+      "A clear mind is a quiet mind.",
+      "The sky is the same for everyone.",
+      "Between stimulus and response there is a space.",
+      "Respond, don't react.",
+      "Equanimity is the hallmark of a balanced mind."
+    ]
+  }
+]

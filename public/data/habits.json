@@ -1,0 +1,76 @@
+{
+  "daily_habits": [
+    {
+      "name": "Drink Water 💧",
+      "description": "Stay hydrated by drinking 8 glasses of water daily."
+    },
+    {
+      "name": "Eat Healthy Meals 🥗",
+      "description": "Include fruits and vegetables in your diet."
+    },
+    {
+      "name": "Brush Teeth 🪥",
+      "description": "Brush twice a day for a healthy smile."
+    },
+    {
+      "name": "Read a Book 📖",
+      "description": "Spend 10 minutes reading something new."
+    },
+    {
+      "name": "Exercise 🏃‍♂️",
+      "description": "Move your body for at least 30 minutes."
+    },
+    {
+      "name": "Sleep 8 Hours 😴",
+      "description": "Get enough rest to recharge your mind and body."
+    },
+    {
+      "name": "Meditate 🧘‍♀️",
+      "description": "Take 5 minutes to breathe and relax."
+    }
+  ],
+  "moods": {
+    "joy": [
+      "Play your favorite game 🎮",
+      "Listen to happy music 🎵",
+      "Draw or paint 🎨",
+      "Dance around 💃"
+    ],
+    "sadness": [
+      "Talk to a friend ☎️",
+      "Write in your journal 📓",
+      "Listen to calming music 🎧",
+      "Go for a walk 🌿"
+    ],
+    "anger": [
+      "Do physical exercise 🏋️‍♀️",
+      "Practice deep breathing 🌬️",
+      "Listen to music 🎶",
+      "Count to 10 slowly 🔟"
+    ],
+    "fear": [
+      "Talk to someone you trust 🤝",
+      "Practice deep breathing 🌬️",
+      "Write your fears down ✍️",
+      "Watch a funny video 😂"
+    ],
+    "disgust": [
+      "Clean your space 🧹",
+      "Wash your hands 🧼",
+      "Take a shower 🚿",
+      "Listen to relaxing music 🎧"
+    ],
+    "surprise": [
+      "Share the news with a friend 🗣️",
+      "Celebrate in a small way 🎉",
+      "Write about it 📝",
+      "Take a moment to reflect 🤔"
+    ],
+    "neutral": [
+      "Meditate 🧘‍♂️",
+      "Plan your day 🗓️",
+      "Read something informative 📚",
+      "Go for a walk 🚶‍♂️"
+    ]
+  }
+}

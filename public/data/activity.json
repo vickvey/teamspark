@@ -1,0 +1,72 @@
+[
+  {
+    "mood": "joy",
+    "activities": [
+      "Play your favorite game 🎮",
+      "Listen to upbeat music 🎵",
+      "Go for a dance 💃",
+      "Paint or draw 🖌️",
+      "Call a friend and laugh together 📞😄"
+    ]
+  },
+  {
+    "mood": "sadness",
+    "activities": [
+      "Write in a journal 📝",
+      "Go for a calm walk 🚶‍♂️",
+      "Listen to soothing music 🎶",
+      "Talk to someone you trust 🗣️",
+      "Practice mindful breathing 🌬️"
+    ]
+  },
+  {
+    "mood": "anger",
+    "activities": [
+      "Do some physical exercise 🏋️‍♂️",
+      "Practice deep breathing 🧘‍♂️",
+      "Listen to music 🎧",
+      "Take a short break or walk 🚶‍♀️",
+      "Count to 10 slowly 🔢"
+    ]
+  },
+  {
+    "mood": "fear",
+    "activities": [
+      "Talk to someone you trust 🗨️",
+      "Write your fears down 📝",
+      "Practice relaxation techniques 🧘‍♀️",
+      "Watch a funny video 😂",
+      "Take small actionable steps to face your fear 👣"
+    ]
+  },
+  {
+    "mood": "disgust",
+    "activities": [
+      "Clean or organize your space 🧹",
+      "Take a refreshing shower 🚿",
+      "Listen to calming music 🎼",
+      "Declutter your digital life 💻",
+      "Try a new hobby or craft ✂️"
+    ]
+  },
+  {
+    "mood": "surprise",
+    "activities": [
+      "Share the news with a friend 📢",
+      "Celebrate in a small way 🎉",
+      "Take a moment to reflect 🤔",
+      "Try something new or spontaneous 🏄‍♂️",
+      "Document the surprise in a journal 🖋️"
+    ]
+  },
+  {
+    "mood": "neutral",
+    "activities": [
+      "Meditate for a few minutes 🧘‍♂️",
+      "Plan your day 🗓️",
+      "Read or listen to something informative 📚",
+      "Take a short walk outside 🌳",
+      "Practice gratitude 🙏"
+    ]
+  }
+]
