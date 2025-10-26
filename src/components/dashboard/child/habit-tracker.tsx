@@ -20,22 +20,26 @@ export const HabitTracker: React.FC<{ userId: string }> = ({ userId }) => {
   const habits = useHabitStore((state) => state.habits);
   const setHabits = useHabitStore((state) => state.setHabits);
   const toggleHabit = useHabitStore((state) => state.toggleHabit);
+  const hydrated = useHabitStore((state) => state.hydrated);
 
   const [isLoading, setIsLoading] = useState(false);
   const [updating, setUpdating] = useState<number | null>(null);
   const [selectedHabit, setSelectedHabit] = useState<Habit | null>(null);
 
-  // Fetch habits if store is empty
+  // Fetch habits (always runs on mount for current user)
   useEffect(() => {
-    if (habits.length > 0) return;
-
     (async () => {
       setIsLoading(true);
-      const data = await fetchTodayTasks(userId);
-      setHabits(data);
-      setIsLoading(false);
+      try {
+        const data = await fetchTodayTasks(userId);
+        setHabits(data);
+      } catch (err) {
+        console.error("Error fetching habits:", err);
+      } finally {
+        setIsLoading(false);
+      }
     })();
-  }, [habits.length, setHabits, userId]);
+  }, [userId, setHabits]);
 
   const handleToggle = async (habit: Habit) => {
     if (habit.completed || updating) return;
@@ -55,6 +59,15 @@ export const HabitTracker: React.FC<{ userId: string }> = ({ userId }) => {
   const completed = habits.filter((h) => h.completed).length;
   const total = habits.length;
   const progress = total > 0 ? (completed / total) * 100 : 0;
+
+  if (!hydrated) {
+    return (
+      <div className="flex justify-center items-center h-32 text-muted-foreground">
+        <Loader2 className="w-5 h-5 animate-spin mr-2" />
+        Loading habits...
+      </div>
+    );
+  }
 
   return (
     <Card className="w-full p-6">

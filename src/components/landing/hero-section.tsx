@@ -3,18 +3,19 @@
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Button } from "@/components/ui/button"; // shadcn UI button
+import { Button } from "@/components/ui/button";
 
 export default function HeroSection() {
   const router = useRouter();
 
   return (
-    <section className="py-32 text-center flex flex-col items-center justify-center bg-linear-to-b from-green-50 to-white w-full">
+    <section className="py-32 text-center flex flex-col items-center justify-center bg-linear-to-b from-background/50 to-background w-full">
+      {/* Heading */}
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="font-extrabold text-5xl md:text-7xl text-green-700 mb-6"
+        className="font-extrabold text-5xl md:text-7xl text-foreground mb-6"
       >
         The Health Manager for your Kid 🌱
       </motion.h1>
@@ -23,7 +24,7 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="text-2xl md:text-3xl text-gray-600 mb-8"
+        className="text-2xl md:text-3xl text-foreground/70 mb-8"
       >
         Are you worried about your child&apos;s health?
       </motion.h4>
@@ -32,15 +33,16 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="text-xl md:text-2xl text-gray-700 mb-2"
+        className="text-xl md:text-2xl text-foreground/80 mb-2"
       >
         Our platform makes learning about healthy habits fun and engaging!
       </motion.h5>
+
       <motion.h6
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="text-lg md:text-xl text-gray-500 mb-10"
+        className="text-lg md:text-xl text-foreground/60 mb-10"
       >
         Educate your child in a well-organized, gamified way.
       </motion.h6>
@@ -54,8 +56,8 @@ export default function HeroSection() {
       >
         <Button
           size="lg"
+          variant="default"
           onClick={() => router.push("/child")}
-          className="bg-green-600 hover:bg-green-700 text-white text-lg"
         >
           Get Started 🚀
         </Button>
@@ -63,7 +65,6 @@ export default function HeroSection() {
           size="lg"
           variant="outline"
           onClick={() => router.push("/learn-more")}
-          className="border-green-600 text-green-700 hover:bg-green-50 text-lg"
         >
           Learn More 💡
         </Button>

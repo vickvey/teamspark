@@ -1,15 +1,23 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ToggleThemeButton } from "./utils/toggle-theme-button";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { ToggleThemeButton } from "./utils/toggle-theme-button";
 
 export default function Header() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const navItems = [
+    { label: "Features", href: "#features" },
+    { label: "How It Works", href: "#how-it-works" },
+    { label: "Testimonials", href: "#testimonials" },
+    { label: "Pricing", href: "#pricing" },
+  ];
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md py-3">
@@ -22,25 +30,22 @@ export default function Header() {
         {/* Brand */}
         <div
           onClick={() => router.push("/")}
-          className="text-2xl font-extrabold text-green-600 cursor-pointer"
+          className="text-2xl font-extrabold text-foreground cursor-pointer"
         >
           HealthEd Kids 🌱
         </div>
 
-        {/* Desktop Nav */}
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8 text-base font-medium">
-          <a href="#features" className="hover:text-green-600 transition">
-            Features
-          </a>
-          <a href="#how-it-works" className="hover:text-green-600 transition">
-            How It Works
-          </a>
-          <a href="#testimonials" className="hover:text-green-600 transition">
-            Testimonials
-          </a>
-          <a href="#pricing" className="hover:text-green-600 transition">
-            Pricing
-          </a>
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="text-foreground/80 hover:text-foreground transition-colors"
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
 
         {/* Right Actions */}
@@ -48,8 +53,8 @@ export default function Header() {
           <ToggleThemeButton />
           <Button
             size="sm"
+            variant="default"
             onClick={() => router.push("/child")}
-            className="bg-green-600 hover:bg-green-700 text-white"
           >
             Login
           </Button>
@@ -58,67 +63,50 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden text-green-700"
+          className="md:hidden text-foreground"
           aria-label="Toggle menu"
         >
           {menuOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
       </motion.div>
 
-      {/* Mobile Nav Menu */}
-      {menuOpen && (
-        <motion.nav
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="md:hidden bg-background border-t mt-2 shadow-lg"
-        >
-          <div className="flex flex-col items-center space-y-4 py-6 text-lg font-medium">
-            <a
-              href="#features"
-              onClick={() => setMenuOpen(false)}
-              className="hover:text-green-600"
-            >
-              Features
-            </a>
-            <a
-              href="#how-it-works"
-              onClick={() => setMenuOpen(false)}
-              className="hover:text-green-600"
-            >
-              How It Works
-            </a>
-            <a
-              href="#testimonials"
-              onClick={() => setMenuOpen(false)}
-              className="hover:text-green-600"
-            >
-              Testimonials
-            </a>
-            <a
-              href="#pricing"
-              onClick={() => setMenuOpen(false)}
-              className="hover:text-green-600"
-            >
-              Pricing
-            </a>
-
-            <div className="flex gap-3 mt-4">
-              <ToggleThemeButton />
-              <Button
-                size="sm"
-                onClick={() => {
-                  router.push("/child");
-                  setMenuOpen(false);
-                }}
-                className="bg-green-600 hover:bg-green-700 text-white"
-              >
-                Login
-              </Button>
+      {/* Mobile Navigation */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.nav
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="md:hidden bg-background border-t mt-2 shadow-lg"
+          >
+            <div className="flex flex-col items-center space-y-4 py-6 text-lg font-medium">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="text-foreground/80 hover:text-foreground transition-colors"
+                >
+                  {item.label}
+                </a>
+              ))}
+              <div className="flex gap-3 mt-4">
+                <ToggleThemeButton />
+                <Button
+                  size="sm"
+                  variant="default"
+                  onClick={() => {
+                    router.push("/child");
+                    setMenuOpen(false);
+                  }}
+                >
+                  Login
+                </Button>
+              </div>
             </div>
-          </div>
-        </motion.nav>
-      )}
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
