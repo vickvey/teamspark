@@ -31,13 +31,13 @@ const gameInfo: GameInfo[] = [
   },
   {
     id: "game-2",
-    title: "Clean Hands Challenge",
-    description: "Wash hands correctly and keep germs away in a fun way.",
-    image: "/images/game-hygiene.svg",
+    title: "ADHD Game: Squares Memory Game",
+    description: "Improve focus and memory by matching pairs of cards.",
+    image: "/images/adhd-game.png",
     difficulty: "Medium",
     age: "6-9",
     benefits: ["Hygiene", "Focus", "Consistency"],
-    href: "/child/game/clean-hands", // ✅ direct link
+    href: "/adhd-game", // ✅ direct link
   },
   {
     id: "game-3",
