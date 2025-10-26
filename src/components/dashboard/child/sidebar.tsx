@@ -1,13 +1,39 @@
 "use client";
 
 import { FaBars } from "react-icons/fa";
+import { useState } from "react";
 
 interface SidebarProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
 }
 
+interface SectionItem {
+  label: string;
+  icon: string;
+  id: string; // unique identifier for active state
+}
+
+const SECTIONS: SectionItem[] = [
+  { label: "Home", icon: "🏠", id: "home" },
+  { label: "My Games", icon: "🎮", id: "games" },
+  { label: "Challenges", icon: "🏆", id: "challenges" },
+  { label: "Rewards", icon: "🎖️", id: "rewards" },
+  { label: "Progress", icon: "📈", id: "progress" },
+];
+
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
+  const [activeSection, setActiveSection] = useState<string>("home");
+
+  const handleSectionClick = (id: string) => {
+    setActiveSection(id);
+    // optional: close sidebar on mobile/tablet
+    if (window.innerWidth < 1024) setIsOpen(false);
+    // scroll to the section if needed
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <>
       {/* Sidebar */}
@@ -27,16 +53,20 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
 
         <nav className="flex-1">
           <ul className="space-y-3">
-            {[
-              { label: "Home", icon: "🏠" },
-              { label: "My Games", icon: "🎮" },
-              { label: "Challenges", icon: "🏆" },
-              { label: "Rewards", icon: "🎖️" },
-              { label: "Progress", icon: "📈" },
-            ].map((item) => (
+            {SECTIONS.map((item) => (
               <li
-                key={item.label}
-                className="hover:bg-green-700 rounded-md px-4 py-2 cursor-pointer flex items-center gap-2"
+                key={item.id}
+                onClick={() => handleSectionClick(item.id)}
+                className={`
+                  flex items-center gap-3 cursor-pointer px-4 py-2 rounded-md
+                  transition-colors duration-200
+                  hover:bg-green-700
+                  ${
+                    activeSection === item.id
+                      ? "bg-green-800 font-semibold shadow-md"
+                      : ""
+                  }
+                `}
               >
                 <span>{item.icon}</span>
                 {item.label}

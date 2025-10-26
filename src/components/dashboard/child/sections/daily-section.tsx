@@ -2,31 +2,7 @@ import React from "react";
 import { HabitTracker } from "@/components/dashboard/child/habit-tracker";
 import SectionWrapper from "@/components/ui/section-wrapper";
 
-// 🎖️ Rewards Card
-const RewardsCard: React.FC = () => (
-  <div className="bg-white rounded-lg shadow-md p-6">
-    <h3 className="text-lg font-semibold mb-2">🎖️ Your Rewards</h3>
-    <p>
-      You have <span className="font-bold text-green-600">120 points</span>!
-    </p>
-    <button className="mt-3 bg-yellow-400 text-white px-4 py-2 rounded-md hover:bg-yellow-500">
-      Redeem Rewards 🎁
-    </button>
-  </div>
-);
-
-// 🎮 Active Game Card
-const ActiveGameCard: React.FC = () => (
-  <div className="bg-white rounded-lg shadow-md p-6">
-    <h3 className="text-lg font-semibold mb-2">🎮 Continue Your Game</h3>
-    <p>Healthy Food Match — Level 4</p>
-    <button className="mt-3 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-      Play Now ▶️
-    </button>
-  </div>
-);
-
-// 💡 Fun Tip Card
+// 💡 Fun Tip Card (keep)
 const FunTipCard: React.FC = () => (
   <div className="bg-white rounded-lg shadow-md p-6">
     <h3 className="text-lg font-semibold mb-2">💡 Health Tip</h3>
@@ -40,12 +16,15 @@ const FunTipCard: React.FC = () => (
 const DailySection: React.FC = () => (
   <SectionWrapper
     title="🏆 Daily Highlights"
-    subtitle="Check out your daily tasks, rewards, games, and quick tips!"
+    subtitle="Check out your daily tasks and quick tips!"
   >
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 items-start">
-      <HabitTracker userId="demo-user-123" />
-      <RewardsCard />
-      <ActiveGameCard />
+      {/* Make HabitTracker span all columns so there's no empty space */}
+      <div className="col-span-1 md:col-span-2 xl:col-span-3">
+        <HabitTracker userId="ava-hanson-123" />
+      </div>
+
+      {/* Keep the fun tip as a separate card */}
       <FunTipCard />
     </div>
   </SectionWrapper>

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Habit, fetchTodayTasks } from "@/lib/fetchTodayTasks";
+import React, { useEffect, useState } from "react";
+import { fetchTodayTasks } from "@/lib/fetchTodayTasks";
+import { useHabitStore, Habit } from "@/lib/store/useHabitStore";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -13,35 +14,38 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Info, Loader2 } from "lucide-react";
-import { toast } from "sonner"; // ✅ new toast system
+import { toast } from "sonner";
 
 export const HabitTracker: React.FC<{ userId: string }> = ({ userId }) => {
-  const [habits, setHabits] = useState<Habit[]>([]);
+  const habits = useHabitStore((state) => state.habits);
+  const setHabits = useHabitStore((state) => state.setHabits);
+  const toggleHabit = useHabitStore((state) => state.toggleHabit);
+
   const [isLoading, setIsLoading] = useState(false);
   const [updating, setUpdating] = useState<number | null>(null);
   const [selectedHabit, setSelectedHabit] = useState<Habit | null>(null);
 
+  // Fetch habits if store is empty
   useEffect(() => {
+    if (habits.length > 0) return;
+
     (async () => {
       setIsLoading(true);
       const data = await fetchTodayTasks(userId);
       setHabits(data);
       setIsLoading(false);
     })();
-  }, [userId]);
+  }, [habits.length, setHabits, userId]);
 
-  const toggleHabit = async (id: number) => {
-    const target = habits.find((h) => h.id === id);
-    if (!target || target.completed || updating) return;
+  const handleToggle = async (habit: Habit) => {
+    if (habit.completed || updating) return;
 
-    setUpdating(id);
-    await new Promise((res) => setTimeout(res, 400)); // mimic API
+    setUpdating(habit.id);
+    await new Promise((res) => setTimeout(res, 400)); // simulate API
 
-    setHabits((prev) =>
-      prev.map((h) => (h.id === id ? { ...h, completed: true } : h))
-    );
+    toggleHabit(habit.id);
 
-    toast.success(`Completed "${target.name}" 🎉`, {
+    toast.success(`Completed "${habit.name}" 🎉`, {
       description: "Nice job keeping up with your routine!",
     });
 
@@ -79,46 +83,61 @@ export const HabitTracker: React.FC<{ userId: string }> = ({ userId }) => {
               <Progress value={progress} />
             </div>
 
-            {/* Habit List */}
-            <div className="space-y-3">
+            {/* Habit Grid */}
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-4">
               {habits.map((habit) => (
                 <div
                   key={habit.id}
-                  className={`flex items-center justify-between border rounded-md p-3 transition ${
+                  className={`border rounded-lg p-4 transition flex flex-col justify-between aspect-square overflow-hidden mx-auto ${
                     habit.completed
                       ? "bg-muted text-muted-foreground"
-                      : "hover:bg-accent"
+                      : "hover:shadow-md"
                   }`}
                 >
                   <div
-                    onClick={() => toggleHabit(habit.id)}
-                    className="flex items-center gap-3 cursor-pointer flex-1"
+                    onClick={() => handleToggle(habit)}
+                    className="flex items-start gap-3 cursor-pointer flex-1"
                   >
                     <input
                       type="checkbox"
                       checked={habit.completed}
                       readOnly
                       disabled={updating === habit.id}
-                      className="accent-cyan-500"
+                      className="accent-cyan-500 mt-1"
                     />
-                    <span
-                      className={`text-base ${
-                        habit.completed ? "line-through" : ""
-                      }`}
-                    >
-                      {habit.name}
-                    </span>
-                    {updating === habit.id && (
-                      <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
-                    )}
+
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between">
+                        <h4
+                          className={`text-base font-semibold leading-tight ${
+                            habit.completed ? "line-through" : ""
+                          }`}
+                        >
+                          {habit.name}
+                        </h4>
+
+                        {updating === habit.id && (
+                          <Loader2 className="w-4 h-4 animate-spin text-gray-400 ml-2" />
+                        )}
+                      </div>
+
+                      {habit.description && (
+                        <p className="text-sm text-muted-foreground mt-2">
+                          {habit.description}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setSelectedHabit(habit)}
-                  >
-                    <Info className="w-4 h-4" />
-                  </Button>
+
+                  <div className="mt-3 flex justify-end">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setSelectedHabit(habit)}
+                    >
+                      <Info className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
               ))}
             </div>
