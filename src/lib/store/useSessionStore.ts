@@ -6,18 +6,16 @@ interface SessionState {
   emotions: string[];
   coins: number;
 
-  // setters for emotions and sentiment
   setSentiment: (s: string) => void;
   setEmotions: (e: string[]) => void;
   clearSession: () => void;
 
-  // coin management
   addCoins: (amount: number) => void;
   subtractCoins: (amount: number) => void;
   resetCoins: () => void;
 }
 
-// Custom typed storage wrapper for Zustand persist
+// Custom typed storage wrapper
 const storage: PersistStorage<SessionState> = {
   getItem: (name) => {
     if (typeof window === "undefined") return null;
@@ -34,12 +32,15 @@ const storage: PersistStorage<SessionState> = {
   },
 };
 
-export const useSessionStore = create(
-  persist<SessionState>(
+// Detect if we are on the client
+const isClient = typeof window !== "undefined";
+
+export const useSessionStore = create<SessionState>()(
+  persist(
     (set) => ({
       sentiment: null,
       emotions: [],
-      coins: 0, // initial coins
+      coins: 0,
 
       setSentiment: (s) => set({ sentiment: s }),
       setEmotions: (e) => set({ emotions: e }),
@@ -53,7 +54,7 @@ export const useSessionStore = create(
     }),
     {
       name: "session-storage",
-      storage,
+      storage: isClient ? storage : undefined, // ✅ SSR-safe
     }
   )
 );
