@@ -4,17 +4,6 @@ import MoodQuotes from "@/components/dashboard/child/mood-quotes";
 import MoodJournal from "@/components/dashboard/child/mood-journal";
 import MoodActivity from "@/components/dashboard/child/mood-activity";
 
-// 🏆 Card 1 — Today's Challenge
-const TodayChallenge: React.FC = () => {
-  return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h3 className="text-lg font-semibold mb-3">🏆 Today&apos;s Challenge</h3>
-      {/* Embed the Habit Tracker */}
-      <HabitTracker userId="demo-user-123" />
-    </div>
-  );
-};
-
 // 🎖️ Card 2 — Rewards
 const RewardsCard: React.FC = () => (
   <div className="bg-white rounded-lg shadow-md p-6">
@@ -53,7 +42,8 @@ const FunTipCard: React.FC = () => (
 const ChildDashboard = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-      <TodayChallenge />
+      {/* <TodayChallenge /> */}
+      <HabitTracker userId="demo-user-123" />
       <MoodJournal />
       <MoodQuotes />
       <MoodActivity />
