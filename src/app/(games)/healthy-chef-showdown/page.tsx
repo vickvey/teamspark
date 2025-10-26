@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { ChefShowdownGameState, Ingredient, Recipe } from "./types";
+import { useSessionStore } from "@/lib/store/useSessionStore";
+import { toast } from "sonner";
 import {
   CHEF_GAME_DURATION,
   AI_THINKING_SPEED,
@@ -17,6 +19,7 @@ const HealthyChefShowdown: React.FC = () => {
   const [gameState, setGameState] = useState<ChefShowdownGameState>("start");
   const [timeLeft, setTimeLeft] = useState(CHEF_GAME_DURATION);
   const [currentRecipe, setCurrentRecipe] = useState<Recipe | null>(null);
+  const addCoins = useSessionStore((state) => state.addCoins);
   const [availableIngredients, setAvailableIngredients] =
     useState<Ingredient[]>(INGREDIENTS);
   const [playerDish, setPlayerDish] = useState<Ingredient[]>([]);
@@ -90,9 +93,29 @@ const HealthyChefShowdown: React.FC = () => {
         const playerScore = calculateScore(playerDish);
         const aiScore = calculateScore(aiDish);
 
-        if (playerScore > aiScore) setWinner("player");
-        else if (aiScore > playerScore) setWinner("ai");
-        else setWinner("tie");
+        if (playerScore > aiScore) {
+          setWinner("player");
+          // Award coins for winning (base + bonus based on score difference)
+          const baseCoins = 50;
+          const bonusCoins = Math.floor((playerScore - aiScore) * 2);
+          const totalCoins = baseCoins + bonusCoins;
+          addCoins(totalCoins);
+          toast.success(`Victory! +${totalCoins} coins! 👨‍🍳✨`);
+        } else if (aiScore > playerScore) {
+          setWinner("ai");
+          // Consolation coins for trying
+          const consolationCoins = 10;
+          addCoins(consolationCoins);
+          toast.info(
+            `Good try! +${consolationCoins} coins for participating! 🎯`
+          );
+        } else {
+          setWinner("tie");
+          // Tie reward
+          const tieCoins = 25;
+          addCoins(tieCoins);
+          toast.success(`It's a tie! +${tieCoins} coins! 🤝`);
+        }
 
         // Delay before result screen
         setTimeout(() => setGameState("result"), 3000);
@@ -105,6 +128,7 @@ const HealthyChefShowdown: React.FC = () => {
     aiDish,
     calculateScore,
     clearAllIntervals,
+    addCoins,
   ]);
 
   // 🧹 Cleanup on unmount

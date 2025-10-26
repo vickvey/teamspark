@@ -1,11 +1,9 @@
+export type ThemeKey = "pirate" | "robot" | "princess" | "default";
 
-export type ThemeKey = 'pirate' | 'robot' | 'princess' | 'default';
-
-export type AnimationKey = 'jump' | 'spin' | 'balance' | 'stomp' | 'wave';
+export type AnimationKey = "jump" | "spin" | "balance" | "stomp" | "wave";
 
 export interface UserProfile {
   userId: string;
-  coinBalance: number;
   avatarTheme: ThemeKey;
   motionMatchCount: number;
 }
@@ -24,4 +22,4 @@ export interface ActivityData {
   animationKey: AnimationKey;
 }
 
-export type GameState = 'home' | 'activity' | 'results';
+export type GameState = "home" | "activity" | "results";

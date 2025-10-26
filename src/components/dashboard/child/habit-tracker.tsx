@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchTodayTasks } from "@/lib/fetchTodayTasks";
 import { useHabitStore, Habit } from "@/lib/store/useHabitStore";
+import { useSessionStore } from "@/lib/store/useSessionStore";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -21,6 +22,9 @@ export const HabitTracker: React.FC<{ userId: string }> = ({ userId }) => {
   const setHabits = useHabitStore((state) => state.setHabits);
   const toggleHabit = useHabitStore((state) => state.toggleHabit);
   const hydrated = useHabitStore((state) => state.hydrated);
+
+  // Get addCoins from session store
+  const addCoins = useSessionStore((state) => state.addCoins);
 
   const [isLoading, setIsLoading] = useState(false);
   const [updating, setUpdating] = useState<number | null>(null);
@@ -49,8 +53,12 @@ export const HabitTracker: React.FC<{ userId: string }> = ({ userId }) => {
 
     toggleHabit(habit.id);
 
+    // Award coins for completing the habit (50-100 coins randomly)
+    const coinsEarned = Math.floor(Math.random() * 51) + 50;
+    addCoins(coinsEarned);
+
     toast.success(`Completed "${habit.name}" 🎉`, {
-      description: "Nice job keeping up with your routine!",
+      description: `Nice job! You earned ${coinsEarned} coins! 🪙`,
     });
 
     setUpdating(null);

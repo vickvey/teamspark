@@ -2,6 +2,7 @@
 
 import React, { useState, useCallback } from "react";
 import type { UserProfile, GameState, ThemeKey } from "./types";
+import { useSessionStore } from "@/lib/store/useSessionStore";
 import {
   INITIAL_USER_PROFILE,
   MILESTONE_1_COUNT,
@@ -49,35 +50,35 @@ export default function App() {
   const { motionMatchCount, avatarTheme } = userProfile;
   const themeAssets = THEME_ASSETS[avatarTheme];
 
+  const { coins, subtractCoins } = useSessionStore();
+
   const handlePlay = useCallback(() => {
-    if (userProfile.coinBalance >= PLAY_COST) {
-      setUserProfile((prev) => ({
-        ...prev,
-        coinBalance: prev.coinBalance - PLAY_COST,
-      }));
+    if (coins >= PLAY_COST) {
+      subtractCoins(PLAY_COST);
       setPreviousCount(motionMatchCount);
       setGameState("activity");
     }
-  }, [userProfile.coinBalance, motionMatchCount]);
+  }, [coins, subtractCoins, motionMatchCount]);
+
+  const { addCoins } = useSessionStore();
 
   const handleActivityComplete = useCallback(() => {
     setUserProfile((prev) => {
       const newCount = prev.motionMatchCount + 1;
-      let newBalance = prev.coinBalance;
       let finalCount = newCount;
 
       if (newCount === MILESTONE_1_COUNT) {
-        newBalance += MILESTONE_1_REWARD;
+        addCoins(MILESTONE_1_REWARD);
       }
       if (newCount === MILESTONE_2_COUNT) {
-        newBalance += MILESTONE_2_REWARD;
+        addCoins(MILESTONE_2_REWARD);
         finalCount = 0;
       }
 
-      return { ...prev, coinBalance: newBalance, motionMatchCount: finalCount };
+      return { ...prev, motionMatchCount: finalCount };
     });
     setGameState("results");
-  }, []);
+  }, [addCoins]);
 
   const handlePlayAgain = useCallback(() => {
     handlePlay();

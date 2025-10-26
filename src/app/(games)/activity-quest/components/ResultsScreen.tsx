@@ -9,6 +9,7 @@ import {
   PLAY_COST,
   THEME_ASSETS,
 } from "../constants";
+import { useSessionStore } from "@/lib/store/useSessionStore";
 import ThemedButton from "./shared/ThemedButton";
 import ActivityTracker from "./ActivityTracker";
 import CoinBalance from "./shared/CoinBalance";
@@ -85,7 +86,8 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
   onPlayAgain,
   onGoHome,
 }) => {
-  const { coinBalance, motionMatchCount, avatarTheme } = userProfile;
+  const { motionMatchCount, avatarTheme } = userProfile;
+  const { coins } = useSessionStore();
   const [prize, setPrize] = useState<number | null>(null);
 
   useEffect(() => {
@@ -98,11 +100,11 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
     return () => clearTimeout(timer);
   }, [previousCount]);
 
-  const canPlay = coinBalance >= PLAY_COST;
+  const canPlay = coins >= PLAY_COST;
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full p-8 text-center">
-      <CoinBalance balance={coinBalance} />
+      <CoinBalance balance={coins} />
 
       <motion.h2
         className="text-4xl md:text-6xl font-bold"

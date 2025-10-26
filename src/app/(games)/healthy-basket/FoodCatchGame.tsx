@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useSessionStore } from "@/lib/store/useSessionStore";
 import {
   GameState,
   initGameState,
@@ -21,6 +22,7 @@ import { Card } from "@/components/ui/card";
 
 const FoodCatchGame: React.FC = () => {
   const router = useRouter();
+  const addCoins = useSessionStore((state) => state.addCoins);
 
   const [gameState, setGameState] = useState<GameState>(initGameState());
   const [message, setMessage] = useState<string>("");
@@ -104,6 +106,10 @@ const FoodCatchGame: React.FC = () => {
               caughtIds.push(f.id);
               const result = catchFood(s, f);
               s = result.state;
+              // Add coins to session store if any were earned
+              if (result.coinsEarned > 0) {
+                addCoins(result.coinsEarned);
+              }
               showMessage(result.message, 1200);
             }
           });
@@ -119,7 +125,7 @@ const FoodCatchGame: React.FC = () => {
 
       return () => cancelAnimationFrame(gameLoopRef.current);
     }
-  }, [gameState.isPlaying, gameState.isPaused, showMessage]);
+  }, [gameState.isPlaying, gameState.isPaused, showMessage, addCoins]);
 
   // ⌨️ Keyboard Controls
   useEffect(() => {

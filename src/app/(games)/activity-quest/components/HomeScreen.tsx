@@ -1,11 +1,11 @@
-
-import React from 'react';
-import type { UserProfile } from '../types';
-import { PLAY_COST } from '../constants';
-import ThemedButton from './shared/ThemedButton';
-import CoinBalance from './shared/CoinBalance';
-import DashAvatar from './DashAvatar';
-import { motion } from 'framer-motion';
+import React from "react";
+import type { UserProfile } from "../types";
+import { PLAY_COST } from "../constants";
+import ThemedButton from "./shared/ThemedButton";
+import CoinBalance from "./shared/CoinBalance";
+import DashAvatar from "./DashAvatar";
+import { motion } from "framer-motion";
+import { useSessionStore } from "@/lib/store/useSessionStore";
 
 interface HomeScreenProps {
   userProfile: UserProfile;
@@ -13,17 +13,18 @@ interface HomeScreenProps {
 }
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ userProfile, onPlay }) => {
-  const { coinBalance, avatarTheme } = userProfile;
-  const canPlay = coinBalance >= PLAY_COST;
+  const { avatarTheme } = userProfile;
+  const { coins } = useSessionStore();
+  const canPlay = coins >= PLAY_COST;
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full p-8 text-center">
-      <CoinBalance balance={coinBalance} />
+      <CoinBalance balance={coins} />
 
       <motion.div
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2, type: 'spring' }}
+        transition={{ delay: 0.2, type: "spring" }}
       >
         <DashAvatar animationKey="wave" theme={avatarTheme} />
       </motion.div>
@@ -44,7 +45,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ userProfile, onPlay }) => {
       >
         Get ready to move with Dash!
       </motion.p>
-      
+
       <div className="mt-12 w-full max-w-xs">
         <ThemedButton
           onClick={onPlay}

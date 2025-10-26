@@ -4,6 +4,8 @@
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useSessionStore } from "@/lib/store/useSessionStore";
+import { toast } from "sonner";
 
 const EMOJIS = ["🍎", "🍌", "🍇", "🍉", "🍓", "🍒", "🥝", "🍍"];
 
@@ -28,6 +30,8 @@ export default function ADHDGame() {
   const [flippedCards, setFlippedCards] = useState<CardType[]>([]);
   const [matchedCount, setMatchedCount] = useState(0);
   const [message, setMessage] = useState("");
+  const [score, setScore] = useState(0);
+  const addCoins = useSessionStore((state) => state.addCoins);
 
   const initializeGame = () => {
     const initialCards: CardType[] = shuffleArray(
@@ -42,6 +46,7 @@ export default function ADHDGame() {
     setFlippedCards([]);
     setMatchedCount(0);
     setMessage("");
+    setScore(0);
   };
 
   useEffect(() => {
@@ -74,10 +79,17 @@ export default function ADHDGame() {
     let newMatchedCount = matchedCount;
 
     if (flipped[0].emoji === flipped[1].emoji) {
+      // Found a match!
       newCards = newCards.map((c) =>
         c.emoji === flipped[0].emoji ? { ...c, matched: true } : c
       );
       newMatchedCount += 2;
+
+      // Award coins for matching pairs (10 coins per match)
+      const coinsEarned = 10;
+      addCoins(coinsEarned);
+      setScore((prev) => prev + coinsEarned);
+      toast.success(`Match found! +${coinsEarned} coins 🪙`);
     } else {
       newCards = newCards.map((c) =>
         c.id === flipped[0].id || c.id === flipped[1].id
@@ -91,7 +103,16 @@ export default function ADHDGame() {
     setMatchedCount(newMatchedCount);
 
     if (newMatchedCount === cards.length) {
-      setMessage("🎉 Congratulations! You matched all the cards!");
+      // Game completed! Award bonus coins
+      const bonusCoins = 50;
+      addCoins(bonusCoins);
+      setScore((prev) => prev + bonusCoins);
+      setMessage(
+        `🎉 Congratulations! You matched all cards and earned ${
+          score + bonusCoins
+        } coins total!`
+      );
+      toast.success(`Game complete! +${bonusCoins} bonus coins! 🏆`);
     }
   };
 
